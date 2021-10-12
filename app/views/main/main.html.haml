@@ -1,0 +1,14 @@
+%h1 Please Login
+
+-# frozen_string_literal: true
+
+= simple_form_for (@user), :url => '/login' do |f|
+    = f.error_notification
+    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+    .form-inputs
+        = f.input :email
+        = f.input :password
+
+    .form-action
+        = f.button :submit, 'Login',class: 'btn btn-primary mt-3'
