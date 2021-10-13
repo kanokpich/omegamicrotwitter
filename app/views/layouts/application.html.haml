@@ -11,4 +11,11 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    = yield
+    .container
+      -if(alert)
+        %div{:class=>'alert alert-danger mt-2' }
+          =alert 
+      -if(notice)
+        %div{:class=>'alert alert-success mt-2' }
+          =notice
+      = yield
