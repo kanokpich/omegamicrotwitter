@@ -1,0 +1,21 @@
+%h1 Feed
+
+%div{:class=>'row'}
+    %div{:class=>'row col-sm-10'}
+        %table{:class=>'table table-striped table-hover'}
+            %thead
+                %tr{:class=>'fw-bolder'}
+                    %th Name
+                    %th Message
+                    %th create_at
+            %tbody
+                - @feed_posts.each.with_index() do |post,index|
+                    %tr
+                        %td
+                            = link_to post.user.name, "/profile/"+post.user.name,class:""
+                        %td
+                            = post.msg
+                        %td
+                            = post.created_at.strftime("%b %d, 20%y %k:%M:%S")
+    %div{:class=>'col col-sm-2'}
+        = link_to 'New post', '/new_post?user_id='+@user.id.to_s, class:"btn btn-outline-primary mt-3"

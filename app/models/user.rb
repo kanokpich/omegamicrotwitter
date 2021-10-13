@@ -6,4 +6,6 @@ class User < ApplicationRecord
     validates_confirmation_of :password
 
     has_many :posts
+    has_many :follower, class_name: 'Follow', foreign_key: 'follower_id'
+    has_many :followee, class_name: 'Follow', foreign_key: 'followee_id'
 end

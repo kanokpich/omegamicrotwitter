@@ -1,0 +1,15 @@
+%nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  .container-fluid
+    -if(session[:user_id])
+      %a.navbar-brand{:href => "/feed?user_id="+session[:user_id].to_s} MicroTwitter
+    -else
+      %a.navbar-brand{:href => "/main"} MicroTwitter
+    %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-bs-target" => "#navbarSupportedContent", "data-bs-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    #navbarSupportedContent.collapse.navbar-collapse
+      %ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        -if(session[:user_id])
+          %li.nav-item
+            %a.nav-link.active{"aria-current" => "profile", :href => "/profile"} Profile
+          %li.nav-item
+            %a.nav-link.active{"aria-current" => "main", :href => "/main"} Logout

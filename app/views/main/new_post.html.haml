@@ -1,0 +1,14 @@
+%h1 Create Post
+
+-# frozen_string_literal: true
+= simple_form_for @post,url:'/create_post' do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.association :user,:as => :hidden
+    = f.input :msg, required:true
+
+  .form-actions
+    = f.button :submit, 'Create' ,class:'btn btn-primary mt-3'
+    = link_to 'Cancel', :back,class: 'btn btn-secondary mt-3'
