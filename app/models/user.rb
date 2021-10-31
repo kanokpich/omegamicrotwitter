@@ -8,4 +8,10 @@ class User < ApplicationRecord
     has_many :posts
     has_many :follower, class_name: 'Follow', foreign_key: 'follower_id'
     has_many :followee, class_name: 'Follow', foreign_key: 'followee_id'
+    has_many :likes
+
+    def get_feed_post
+        return Post.where(:user_id => Follow.where(follower_id:id).pluck('followee_id')).order("created_at DESC")
+    end
 end
+

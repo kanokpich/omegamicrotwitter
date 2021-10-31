@@ -20,6 +20,23 @@
                             = post.msg
                         %td
                             = post.created_at.strftime("%b %d, 20%y %k:%M:%S")
+                        %td 
+                            = simple_form_for(@user, method: :post, url: '/like/'+post.id.to_s) do |f|
+                                .form-inputs
+                                    = f.input :id,:as => :hidden
+                                .form-actions
+                                    -if(post.likes.find_by(user_id:@user.id))
+                                        = f.button :submit,'Unlike',class:'btn btn-danger mt-3',action:'Unlike'
+                                    - else
+                                        = f.button :submit,'Like',class:'btn btn-secondary mt-3',action:'Like'
+                            = post.likes.count
+                            - if post.likes.count > 1
+                                = ' Likes'
+                            - else
+                                = ' Like'
+                            %a.wholikebutton{"data-target" => "#likeModal", "data-toggle" => "modal", :type => "button", "likers"=>"#{post.get_liked_user}"}
+                                = "See who like this post"
+
 
     %div{:class=>'col col-sm-2'}
         = simple_form_for(@user, method: :post, url: '/follow?user_id='+@profile_user.id.to_s) do |f|

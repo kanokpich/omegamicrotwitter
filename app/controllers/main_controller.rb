@@ -48,11 +48,7 @@ class MainController < ApplicationController
   end
 
   def feed 
-    @list = [@user.id]
-    @user.follower.each { |follow|
-      @list.push(follow.followee_id)
-    }
-    @feed_posts = Post.where(:user_id => @list).sort_by {|post| post.created_at}.reverse!
+    @feed_posts = @user.get_feed_post
   end
 
   def new_post
@@ -100,6 +96,22 @@ class MainController < ApplicationController
       Follow.find_by(follower:@user,followee:@to_follow).destroy
         respond_to do |format|
         format.html { redirect_to '/profile/'+@to_follow.name}
+      end
+    end
+  end
+
+  def like 
+    @user = User.find(params[:user][:id])
+    @post=Post.find(params[:post_id])
+    if(params[:commit]=='Like')
+      Like.create(user:@user,post:@post).save
+      respond_to do |format|
+      format.html { redirect_to '/feed/?user_id='+@user.id.to_s}
+    end
+    elsif(params[:commit]=='Unlike')
+      Like.find_by(user:@user,post:@post).destroy
+        respond_to do |format|
+        format.html { redirect_to '/feed/?user_id='+@user.id.to_s}
       end
     end
   end
